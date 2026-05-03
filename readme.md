@@ -89,3 +89,17 @@ server{
 | least_conn | 依据最少连接方式，把请求优先分配给连接数少的后端服务   |
 | url_hash   | 依据url分配方式，这样相同的url会被分配到同一个后端服务 |
 | fair       | 依据响应时间方式，响应时间短的服务将会被优先分配       |
+
+
+
+### 2. ThreadLocaL
+
+ThreadLocaL 为每个线程提供单独一份存储空间，具有线程**隔离**效果
+
+常用方法：
+
+``` java
+public void set(T value) // 设置当前线程局部变量的值
+public T get() //返回当前线程所对应的线程局部变量的值
+public void remove() //移除当前线程的线程局部变量
+```
