@@ -103,3 +103,34 @@ public void set(T value) // 设置当前线程局部变量的值
 public T get() //返回当前线程所对应的线程局部变量的值
 public void remove() //移除当前线程的线程局部变量
 ```
+### 3. 时间格式
+
+方式1：
+
+在属性上添加注解
+
+```java
+@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+private LocalDateTime createTime;
+```
+
+方式2：
+
+在 ***WebMvcConfiguration*** 中拓展Spring MVC的消息转化器，统一对时间格式进行格式化处理
+
+```java
+/**
+ * 拓展消息转化器
+ * 日期类型格式化
+ * @param converters
+ */
+@Override
+protected void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+    log.info("扩展消息转换器");
+    //创建一个消息转换器对线
+    MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+    //设置一个对象转换器 -- 将Java对象序列化为json格式
+    converter.setObjectMapper(new JacksonObjectMapper());
+    converters.add(0, converter);
+}
+```
